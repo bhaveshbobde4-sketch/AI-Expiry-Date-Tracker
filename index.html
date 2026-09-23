@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Based Expiry Date Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Expiry<span>AI</span></div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#scan">Scan</a>
+      <a href="#inventory">Inventory</a>
+      <a href="#history">History</a>
+      <a href="#about">About</a>
+    </nav>
+    <button class="nav-btn" onclick="scrollToSection('scan')">Scan Food</button>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">SMART FOOD MANAGEMENT</p>
+        <h1>AI-Based<br><span>Expiry Date Tracker</span></h1>
+        <p class="hero-text">
+          Scan your food packages, detect expiry dates using OCR,
+          and manage your food inventory smarter.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-btn" onclick="scrollToSection('scan')">Scan Food Package →</button>
+          <button class="secondary-btn" onclick="scrollToSection('inventory')">View Inventory</button>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="card-top">
+          <span>Today's Overview</span>
+          <span class="status-dot"></span>
+        </div>
+        <div class="stats">
+          <div><strong id="totalCount">0</strong><small>Total Items</small></div>
+          <div><strong id="soonCount">0</strong><small>Expiring Soon</small></div>
+          <div><strong id="expiredCount">0</strong><small>Expired</small></div>
+        </div>
+        <div class="mini-message">
+          <span>✓</span>
+          <div><b>Smart tracking active</b><small>Your food inventory is up to date.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scan" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">STEP 01</p>
+        <h2>Scan a Food Package</h2>
+        <p>Upload a package image. OCR integration will read the expiry date.</p>
+      </div>
+
+      <div class="scan-box">
+
+    <input
+        id="imageInput"
+        type="file"
+        accept="image/*"
+    >
+
+    <label for="imageInput" class="upload-button">
+        Choose Image
+    </label>
+
+    <div class="upload-icon">⌕</div>
+
+    <h3>Upload Food Package Image</h3>
+
+    <p>JPG, PNG or WEBP • Camera images supported</p>
+
+    <div id="previewWrap" class="preview-wrap hidden">
+
+        <img
+            id="preview"
+            alt="Food package preview"
+        >
+
+        <button
+            id="readExpiryBtn"
+            class="secondary-btn"
+            type="button"
+        >
+            Read Expiry Date
+        </button>
+
+    </div>
+
+    <p id="scanMessage" class="scan-message"></p>
+
+</div>
+    </section>
+
+    <section id="inventory" class="section inventory-section">
+      <div class="section-heading row-heading">
+        <div>
+          <p class="eyebrow">STEP 02</p>
+          <h2>Food Inventory</h2>
+          <p>Keep track of your products and consume items before they expire.</p>
+        </div>
+        <button class="primary-btn" onclick="openAddForm()">+ Add Item</button>
+      </div>
+
+      <div id="addForm" class="add-form hidden">
+        <input id="productName" placeholder="Product name" />
+        <input id="expiryDate" type="date" />
+        <button class="primary-btn" onclick="addItem()">Save Item</button>
+        <button class="secondary-btn" onclick="closeAddForm()">Cancel</button>
+      </div>
+<div id="reminderPanel" class="reminder-panel hidden"></div>
+
+<div id="consumeFirst" class="consume-first hidden">
+    <p class="eyebrow">SMART SUGGESTION</p>
+    <h3>🍽️ Consume First</h3>
+    <p>These products have the nearest upcoming expiry dates.</p>
+
+    <div id="consumeItems" class="consume-items"></div>
+</div>
+<div class="inventory-tools">
+    <input
+        type="text"
+        id="inventorySearch"
+        placeholder="🔍 Search food..."
+        oninput="filterInventory()"
+    >
+
+    <select id="statusFilter" onchange="filterInventory()">
+        <option value="all">All Items</option>
+        <option value="safe">Safe</option>
+        <option value="soon">Expiring Soon</option>
+        <option value="expired">Expired</option>
+    </select>
+</div>
+
+      <div id="inventoryList" class="inventory-list"></div>
+      <div id="emptyState" class="empty-state">No food items yet. Scan or add your first item.</div>
+    </section>
+<section id="history" class="section">
+
+    <div class="section-heading">
+        <p class="eyebrow">STEP 03</p>
+        <h2>Consumed History</h2>
+        <p>
+            View the food items that have already been consumed.
+        </p>
+    </div>
+
+    <div id="historyList" class="history-list"></div>
+
+    <div id="emptyHistory" class="empty-history">
+        <h3>No consumed items yet</h3>
+        <p>
+            Items marked as consumed will appear here.
+        </p>
+    </div>
+
+</section>
+
+    <section id="about" class="section about">
+      <div class="about-card">
+        <p class="eyebrow">ABOUT THE PROJECT</p>
+        <h2>Less waste. Smarter food management.</h2>
+        <p>
+          The system uses smartphone images and OCR technology to identify
+          expiry or best-before dates. It stores the information digitally,
+          tracks expiry status, and can later provide smart reminders and
+          consumption suggestions.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>AI-Based Expiry Date Tracker • Minor Project</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
